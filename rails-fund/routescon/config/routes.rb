@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+    get "/" => says#index
+    get "hello" => "hello#home"
+    get "say/hello/joe" => "hello#joe"
+    get "say/hello/michael" => "hello#michael"
+    get "times" => "hello#times"
+    get "times/restart" => "hello#restart"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
