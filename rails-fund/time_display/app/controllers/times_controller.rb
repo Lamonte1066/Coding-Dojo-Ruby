@@ -1,6 +1,6 @@
 class TimesController < ApplicationController
     def main
-        @currentDate = Time.now.strftime("%B %e, %Y")
-        @currentTime = Time.now.strftime("%I:%M %P")
+        # save current date and time to an instance variable
+        @time = Time.new
     end
 end

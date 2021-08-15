@@ -1,0 +1,42 @@
+<div class="container">
+    <% if flash[:error] %>
+        <div id="alert">
+            <p><%= flash[:error] %></p> 
+        </div>
+    <% end %>
+    <div class="this_form">
+    <form action="/create" method="POST">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <label>Your Name: 
+            <span>
+                <input type="text" name="user[name]">
+            </span>
+        </label>
+        <label>Dojo Location:
+            <select name="user[location]">
+                <option>Mountain View</option>
+                <option>Chicago</option>
+                <option>Dallas</option>
+                <option>Seattle</option>
+            </select>
+        </label>
+        <label>Favorite Language:
+            <select name="user[language]">
+                <option>JavaScript</option>
+                <option>Python</option>
+                <option>Ruby</option>
+                <option>C#</option>
+                <option>Java</option>
+                <option>PHP</option>
+            </select>
+        </label>
+        <label>Comment (optional):
+            <textarea name="user[comment]" cols="40" rows="5"></textarea>
+            <input type="Submit" name="Submit" value="Submit">
+        </label>
+    </form>
+    </div>
+</div>
+
+
+

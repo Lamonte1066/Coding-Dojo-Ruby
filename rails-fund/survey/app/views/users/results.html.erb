@@ -1,0 +1,17 @@
+<div class="container">
+	<% if flash[:success] %>
+		<div id="alert">
+	    <p> <%= flash[:success] %> </p>
+    <% end %>
+    <div class="submission">
+        <h1>Submitted Information</h1>
+        <p>Name: <%= @user.name %> </p>
+        <p>Dojo Location: <%= @user.location %> </p>
+        <p>Favorite Language: <%= @user.language %> </p>
+        <p>Comments: <%= @user.comment %> </p>
+        <form action='/'>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    	    <button = button_to "/"> Go Back </button>
+	    </form>
+	</div>
+</div>
