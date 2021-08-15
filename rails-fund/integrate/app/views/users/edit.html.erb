@@ -1,0 +1,7 @@
+<h1>Users#edit</h1>
+<form action="/users" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %">
+    <label for="name">Edit Name:</label>
+    <input type="text name="name">
+    <input type="submit" value="Edit">
+</form>
