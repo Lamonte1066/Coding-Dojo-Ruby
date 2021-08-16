@@ -1,25 +1,43 @@
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
 <h1>Listing <%= @camps.count %> Dojos</h1>
 <% if flash[:success] %>
     <p><%= flash[:success] %></p>
 <% end %>
 <table>
-    <thead>
-        <tr>
-            <th>Coding Dojo Branch</th>
-            <th>Street</th>
-            <th>City</th>
-            <th>State</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @camps.each do |camp| %>
-        <tr>
-            <td><%= camp.branch %></td>
-            <td><%= camp.street %></td>
-            <td><%= camp.city %></td>
-            <td><%= camp.state %></td>
-        </tr>
-        <% end %>
-
-    </tbody>
+    <tr>
+        <th>Coding Dojo Branch</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Actions</th>
+    </tr>
+    <% @camps.each do |camp| %>
+    <tr>
+        <td><%= camp.branch %></td>
+        <td><%= camp.street %></td>
+        <td><%= camp.city %></td>
+        <td><%= camp.state %></td>
+        <td>
+            <a href="camps/<%= camp.id%>">Show</a>  |
+            <a href="<%= camp.id%>/edit">Edit</a>  |
+            <a href="camps/<%= camp.id%>" data-method="DELETE">Destroy</a>
+        </td>
+    </tr>
+    <% end %>
 </table>

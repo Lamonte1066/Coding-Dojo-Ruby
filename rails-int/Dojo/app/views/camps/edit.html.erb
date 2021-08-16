@@ -1,0 +1,21 @@
+<h1>Editing <%= @camp.city %></h1>
+<% if flash[:errors] %>
+	<% flash[:errors].each do |error| %>
+		<p><%= error %></p>
+	<% end %>
+<% end %>
+<form method="post">
+	<input type="hidden" name="_method" value="patch">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+	<p><label for="branch">Branch: </label>
+	<input type="text" name="form[branch]" value="<%= @camp.branch %>"></p>
+	<p><label for="branch">Street: </label>
+	<input type="text" name="form[street]" value="<%= @camp.street %>"></p>
+	<p><label for="branch">City: </label>
+	<input type="text" name="form[city]" value="<%= @camp.city %>"></p>
+	<p><label for="branch">State: </label>
+	<input type="text" name="form[state]" value="<%= @camp.state %>"></p>
+	<input type="submit" name="submit" value="Update">
+</form>
+
+<p><a href="<%= camps_id_path %>">Home</a> | <a href="javascript:history.back()">Show</a></p>

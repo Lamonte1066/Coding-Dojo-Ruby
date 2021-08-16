@@ -1,0 +1,20 @@
+<h1>Enter new Dojo</h1>
+<% if flash[:errors] %>
+    <%= flash[:errors].each do |error| %>
+        <p><%= error %></p>
+    <% end %>
+<% end %>
+<form action="<%= camps_create_url %>" method="POST">
+    <input type="hidden" name="authenticity_token" value ="<%= form_authenticity_token %>">
+    <p><label for="branch">Branch: </label></p>
+    <input type="text" name="form[branch]" value="<%= @camp.branch %>">
+    <p><label for="branch">Street: </label></p>
+    <input type="text" name="form[street]" value="<%= @camp.street %>">
+    <p><label for="branch">City: </label></p>
+    <input type="text" name="form[city]" value="<%= @camp.city %>">
+    <p><label for="branch">State: </label></p>
+    <input type="text" name="form[state]" value="<%= @camp.state %>">
+    <p><input type="submit" name="submit" value="Create"></p>
+    <p><a href="<%= camps_path %>>Go Back</a></p>
+</form>
+
