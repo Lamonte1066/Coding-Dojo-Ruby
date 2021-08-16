@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  get '' => 'rpg#home'
+
+  get 'rpg/clear' => 'rpg#clear'
+
+  get 'rpg/actclear' => 'rpg#actclear'
+
+  get 'rpg/farm' => 'rpg#farm'
+
+  get 'rpg/cave' => 'rpg#cave'
+
+  get 'rpg/house' => 'rpg#house'
+
+  get 'rpg/casino' => 'rpg#casino'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
