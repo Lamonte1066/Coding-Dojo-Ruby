@@ -1,0 +1,25 @@
+<h1>Listing <%= @camps.count %> Dojos</h1>
+<% if flash[:success] %>
+    <p><%= flash[:success] %></p>
+<% end %>
+<table>
+    <thead>
+        <tr>
+            <th>Coding Dojo Branch</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>State</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @camps.each do |camp| %>
+        <tr>
+            <td><%= camp.branch %></td>
+            <td><%= camp.street %></td>
+            <td><%= camp.city %></td>
+            <td><%= camp.state %></td>
+        </tr>
+        <% end %>
+
+    </tbody>
+</table>
