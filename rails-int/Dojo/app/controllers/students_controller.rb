@@ -1,83 +1,50 @@
 class StudentsController < ApplicationController
-  def index
+  def new
+    @camps = Camp.all
+    @camp = Camp.find(params[:camp_id])
   end
 
   def create
-    @student = Student.new(first_name:params[:first_name], last_name:params[:last_name],emal:params[:email], camp:Camp.find(params['camp']))
-    if @student.valid?
-        @student.save
-        session[:first_name] = nil
-        session[:last_name] = nil
-        session[:email] = nil
-        session[:camp] = params[:camp]
-        return redirect_to 'camps/'+params[:id]+'/students/new'
-    end
-  end
+    @student = Student.new(student_params)
 
-  def new
-    @camp = Camp.find(params[:camp_id])
-    @camps = Camp.all
-    return render 'new'
-  end
-
-  def edit
-    @camp = Camp.find(params[:camp])
-    @student = Student.find(params[:student_id])
-    @student.first_name = params[:first_name]
-    @student.last_name = params[:last_name]
-    @student.email = params[:email]
-    @student.camp = @camp
-    if @student.valid?
-        session[:first_name] = nil
-        session[:last_name] = nil
-        session[:email] = nil
-        session[:camp] = params[:camp]
-        @student.save
-        return redirect_to '/camps/'+params[:camp_id]
+    if @student.save
+      redirect_to "/camps/#{@student.camp_id}", notice: "You have successfully created a Student!"
     else
-      flash[:failed] = @camp.errors.full_messages
-      session[:first_name] = params[:first_name]
-      session[:last_name] = params[:last_name]
-      session[:email] = params[:email]
-      session[:camp] = params[:camp]
-      return redirect_to '/camps/'+params[:camp]+'/students'+params[:student_id]+'/edit'
+      flash[:errors] = @student.errors.full_messages
+      redirect_to :back
     end
   end
 
   def show
-    @student = Student.find(params[:student_id])
-    @start_date = @student.created_at.beginning_of_day
-    @end_date = @student.created_at.end_of_day
-    @students = Student.where(camp: Camp.find(params[:camp_id]), :created_at => @start_date..@end_date)
-    return render 'show'
+    # created custome class method to join the student and the camp. Look at the Student model
+    @student = Student.with_camp(params[:id])
+    # created custom class method. Look at the Student model
+    @cohort = Student.cohort(@student)
+  end
+
+  def edit
+    @camps = Camp.all
+    @student = Student.find(params[:id])
   end
 
   def update
-    @camp = Camp.find(params[:camp])
-    @student = Student.find(params[:student_id])
-    @student.first_name = params[:first_name]
-    @student.last_name = params[:last_name]
-    @student.email = params[:email]
-    @student.camp = @camp
-    if @student.valid?
-      session[:first_name] = nil
-      session[:last_name] = nil
-      session[:email] = nil
-      session[:camp] = params[:camp]
-      @student.save
-      return redirect_to '/camps'+params[:camp_id]
+    @student = Student.find(params[:id])
+
+    if @student.update(student_params)
+      redirect_to camp_student_path(@student.camp_id, @student.id), notice: "You have successfully updated a Student!"
     else
-      flash[:failed] = @camp.errors.full_messages
-      session[:first_name] = params[:first_name]
-      session[:last_name] = params[:last_name]
-      session[:email] = params[:email]
-      session[:camp] = params[:camp]
-      return redirect_to '/camps/'+params[:camp]+'/students'+params[:student_id]+'/edit'
+      flash[:errors] = @student.errors.full_messages
+      redirect_to :back
     end
   end
 
   def destroy
-    Student.find(params[:student_id]).destroy
-    return redirect_to '/camps/'+params[:camp_id]
+    Student.find(params[:id])
+    redirect_to :root
   end
+
+  private
+    def student_params
+      params.require(:student).permit(:first_name, :last_name, :email, :camp_id)
+    end
 end

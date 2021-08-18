@@ -5,11 +5,11 @@ class CampsController < ApplicationController
 
   def create
     @camp = Camp.create(camp_params)
-    if @camp.valid?
-      redirect_to "/camps"
-    elsif @camp.errors
+    if @camp.save
+      redirect_to @camp, notice: "You have successfully created a Dojo!"
+    else
       flash[:errors] = @camp.errors.full_messages
-      redirect_to '/camps/new'
+      redirect_to :back
     end
   end
 
@@ -19,6 +19,7 @@ class CampsController < ApplicationController
 
   def show
     @camp = Camp.find(params[:id])
+    @students = @camp.students
   end
 
   def edit
@@ -27,17 +28,17 @@ class CampsController < ApplicationController
 
   def update
     camp = Camp.find(params[:id])
-    if @camp.valid?
-      redirect_to '/camps'
-    elsif @camp.errors
+
+    if @camp.update(camp_params)
+      redirect_to root_path, noice: "You have successfully updated a Dojo!"
+    else
       flash[:errors] = camp.errors.full_messages
-      redirect_to "/camps/#{@camp.id}/edit"
+      redirect_to :back
     end
   end
 
   def destroy
-    camp = Camp.find(params[:id])
-    camp.destroy
+    Camp.find(params[:id]).destroy
     redirect_to :root
   end
 
