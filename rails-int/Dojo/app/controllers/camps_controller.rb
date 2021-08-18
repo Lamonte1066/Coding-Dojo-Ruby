@@ -4,13 +4,12 @@ class CampsController < ApplicationController
   end
 
   def create
-    @camp = Camp.new(form_params)
-    if @camp.save
-        flash[:success] = "Dojo created"
-        redirect_to camps_create_url
-    else
+    @camp = Camp.create(camp_params)
+    if @camp.valid?
+      redirect_to "/camps"
+    elsif @camp.errors
       flash[:errors] = @camp.errors.full_messages
-      redirect_to camps_path
+      redirect_to '/camps/new'
     end
   end
 
@@ -24,33 +23,26 @@ class CampsController < ApplicationController
 
   def edit
     @camp = Camp.find(params[:id])
-    session[:branch] = @camp.branch
-    session[:street] = @camp.street
-    session[:city] = @camp.city
-    session[:state] = @camp.state
-    return render 'edit'
   end
 
   def update
     camp = Camp.find(params[:id])
-
-    if camp.update(form_params)
-      flash[:success] = "Dojo updated"
-      redirect_to camps_path
-    else
+    if @camp.valid?
+      redirect_to '/camps'
+    elsif @camp.errors
       flash[:errors] = camp.errors.full_messages
-      redirect_to :back
+      redirect_to "/camps/#{@camp.id}/edit"
     end
   end
 
   def destroy
     camp = Camp.find(params[:id])
     camp.destroy
-    redirect_to camps_path
+    redirect_to :root
   end
 
   private
-    def form_params
-      params.require(:form).permit(:branch, :street, :city, :state)
+    def camp_params
+      params.require(:camp).permit(:branch, :street, :city, :state)
     end
 end

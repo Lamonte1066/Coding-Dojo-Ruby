@@ -34,10 +34,12 @@ tr:nth-child(even) {
         <td><%= camp.city %></td>
         <td><%= camp.state %></td>
         <td>
-            <a href="camps/<%= camp.id%>">Show</a>  |
-            <a href="<%= camp.id%>/edit">Edit</a>  |
-            <a href="camps/<%= camp.id%>" data-method="DELETE">Destroy</a>
+            <%= link_to "Show", camp %>
+            <%= link_to "Edit", edit_camp_path(camp) %>
+            <%= link_to "Delete", camp, data: { method: :delete, confirm: "Are you sure?" } %>
         </td>
     </tr>
     <% end %>
 </table>
+
+<%= link to "New Dojo", new_camp_path %>
